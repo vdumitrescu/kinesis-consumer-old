@@ -2,7 +2,8 @@ package com.gilt
 
 import com.amazonaws.services.kinesis.clientlibrary.interfaces.IRecordProcessorCheckpointer
 import com.amazonaws.services.kinesis.clientlibrary.interfaces.v2.IRecordProcessor
-import com.amazonaws.services.kinesis.clientlibrary.types.{InitializationInput, ProcessRecordsInput, ShutdownInput, ShutdownReason}
+import com.amazonaws.services.kinesis.clientlibrary.lib.worker.ShutdownReason
+import com.amazonaws.services.kinesis.clientlibrary.types.{InitializationInput, ProcessRecordsInput, ShutdownInput}
 import com.amazonaws.services.kinesis.model.Record
 import com.gilt.gfc.logging.Loggable
 import com.gilt.gfc.util.Retry
@@ -43,7 +44,7 @@ class LoggingRecordProcessor(stream: String) extends IRecordProcessor with Logga
     }
   }
 
-  private[this] def printEvent(event: Record) = {
+  private[this] def printEvent(event: Record): Unit = {
     val message = new String(event.getData.array(), "UTF-8")
     info(s"[$stream] $message")
   }

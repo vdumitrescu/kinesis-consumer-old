@@ -11,6 +11,6 @@ libraryDependencies ++= Seq(
   "com.typesafe.play" %% "play-json" % "2.4.6",
   "com.gilt" %% "gfc-logging" % "0.0.3",
   "com.gilt" %% "gfc-util" % "0.1.1",
-  "com.amazonaws" % "amazon-kinesis-client" % "1.6.1",
-  "com.amazonaws" % "aws-java-sdk-sts" % "1.10.40"
+  "com.amazonaws" % "amazon-kinesis-client" % "1.9.1",
+  "com.amazonaws" % "aws-java-sdk-sts" % "1.11.354"
 )

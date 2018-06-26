@@ -10,19 +10,19 @@ import com.amazonaws.services.kinesis.metrics.impl.NullMetricsFactory
 
 class KinesisConsumer(streamName: String, credentialsProvider: AWSCredentialsProvider, iamRoleArnOpt: Option[String]) extends IRecordProcessorFactory {
 
-  val uuid = UUID.randomUUID()
-  val appName = s"kinesisConsumer-$streamName-$uuid"
-  val workerId = s"${InetAddress.getLocalHost.getCanonicalHostName}:$uuid"
+  private[this] val uuid = UUID.randomUUID()
+  private[this] val appName = s"kinesisConsumer-$streamName-$uuid"
+  private[this] val workerId = s"${InetAddress.getLocalHost.getCanonicalHostName}:$uuid"
 
-  val dynamoCredentialsProvider = credentialsProvider
+  private[this] val dynamoCredentialsProvider = credentialsProvider
 
-  val kinesisCredentialsProvider = iamRoleArnOpt map { iamRoleArn =>
+  private[this] val kinesisCredentialsProvider = iamRoleArnOpt map { iamRoleArn =>
     new STSAssumeRoleSessionCredentialsProvider(credentialsProvider, iamRoleArn, appName.take(64))
   } getOrElse credentialsProvider
 
-  val cloudwatchCredentialsProvider = credentialsProvider
+  private[this] val cloudwatchCredentialsProvider = credentialsProvider
 
-  val kclConfig = new KinesisClientLibConfiguration(
+  private[this] val kclConfig = new KinesisClientLibConfiguration(
       appName,
       streamName,
       kinesisCredentialsProvider,

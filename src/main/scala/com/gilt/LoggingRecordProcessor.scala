@@ -46,7 +46,7 @@ class LoggingRecordProcessor(stream: String) extends IRecordProcessor with Logga
 
   private[this] def printEvent(event: Record): Unit = {
     val message = new String(event.getData.array(), "UTF-8")
-    info(s"[$stream] $message")
+    warn(s"$message")
   }
 
   private[this] def checkpoint(checkpointer: IRecordProcessorCheckpointer): Unit = {
